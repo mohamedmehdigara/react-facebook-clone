@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import the useHistory hook
 import './Login.css';
 
+
 function Login() {
-  const handleLogin = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Create a history object
+
+  const handleLogin = (e) => {
+    e.preventDefault();
     // Add login functionality here
     // You can use an authentication library or implement your own logic
-    console.log("Login button clicked");
+
+    // Simulate a successful login
+    if (email && password) {
+      // Redirect the user to the desired page
+      navigate.push('/dashboard');
+    }
   };
 
   return (
@@ -15,13 +27,26 @@ function Login() {
       </div>
       <div className="login__container">
         <h1>Welcome to Facebook</h1>
-        <button className="login__button" onClick={handleLogin}>
-          Login with Facebook
-        </button>
+        <form className="login__form" onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="login__button" type="submit">
+            Login to Facebook
+          </button>
+        </form>
       </div>
     </div>
   );
 }
 
 export default Login;
-

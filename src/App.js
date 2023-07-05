@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Feed from './components/Feed';
@@ -11,21 +12,25 @@ function App() {
   const user = null; // Set the user object to null for login state, replace with your user authentication logic
 
   return (
-    <div className="app">
-      {!user ? (
-        <Login />
-      ) : (
-        <>
-          <Header />
-          <div className="app__body">
-            <Sidebar />
-            <Feed />
-            <Messenger />
-            <Notifications />
-          </div>
-        </>
-      )}
-    </div>
+    <Router> {/* Add the Router component */}
+      <div className="app">
+        {!user ? (
+          <Login />
+        ) : (
+          <>
+            <Header />
+            <div className="app__body">
+              <Sidebar />
+              <Routes>
+                <Route path="/messenger" component={Messenger} />
+                <Route path="/notifications" component={Notifications} />
+                <Route path="/" component={Feed} />
+              </Routes>
+            </div>
+          </>
+        )}
+      </div>
+    </Router>
   );
 }
 
